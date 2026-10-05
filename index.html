@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>IP Calculator - IPv4 Subnet Calculator</title>
+    <meta name="description"
+          content="Free IPv4 IP Calculator and Subnet Calculator. Calculate subnet mask, network address, broadcast address, usable IP range and hosts.">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header>
+    <div class="container">
+        <h1>IP Calculator</h1>
+        <p>IPv4 Subnet & Network Calculator</p>
+    </div>
+</header>
+
+<main class="container">
+
+    <section class="calculator-card">
+
+        <h2>IPv4 Calculator</h2>
+
+        <div class="input-row">
+
+            <div class="input-group">
+                <label for="ipAddress">IP Address</label>
+                <input
+                    type="text"
+                    id="ipAddress"
+                    placeholder="192.168.10.10"
+                    value="192.168.10.10">
+            </div>
+
+            <div class="input-group">
+                <label for="cidr">CIDR</label>
+                <select id="cidr">
+                    <option value="8">/8</option>
+                    <option value="9">/9</option>
+                    <option value="10">/10</option>
+                    <option value="11">/11</option>
+                    <option value="12">/12</option>
+                    <option value="13">/13</option>
+                    <option value="14">/14</option>
+                    <option value="15">/15</option>
+                    <option value="16">/16</option>
+                    <option value="17">/17</option>
+                    <option value="18">/18</option>
+                    <option value="19">/19</option>
+                    <option value="20">/20</option>
+                    <option value="21">/21</option>
+                    <option value="22">/22</option>
+                    <option value="23">/23</option>
+                    <option value="24" selected>/24</option>
+                    <option value="25">/25</option>
+                    <option value="26">/26</option>
+                    <option value="27">/27</option>
+                    <option value="28">/28</option>
+                    <option value="29">/29</option>
+                    <option value="30">/30</option>
+                </select>
+            </div>
+
+        </div>
+
+        <button onclick="calculateIP()">Calculate</button>
+
+        <p id="error" class="error"></p>
+
+    </section>
+
+
+    <section id="resultSection" class="result-section">
+
+        <h2>Calculation Result</h2>
+
+        <div class="result-grid">
+
+            <div class="result-box">
+                <span>IP Address</span>
+                <strong id="resultIP">-</strong>
+            </div>
+
+            <div class="result-box">
+                <span>CIDR</span>
+                <strong id="resultCIDR">-</strong>
+            </div>
+
+            <div class="result-box">
+                <span>Subnet Mask</span>
+                <strong id="subnetMask">-</strong>
+            </div>
+
+            <div class="result-box">
+                <span>Network Address</span>
+                <strong id="networkAddress">-</strong>
+            </div>
+
+            <div class="result-box">
+                <span>Broadcast Address</span>
+                <strong id="broadcastAddress">-</strong>
+            </div>
+
+            <div class="result-box">
+                <span>First Usable IP</span>
+                <strong id="firstIP">-</strong>
+            </div>
+
+            <div class="result-box">
+                <span>Last Usable IP</span>
+                <strong id="lastIP">-</strong>
+            </div>
+
+            <div class="result-box">
+                <span>Total Addresses</span>
+                <strong id="totalAddresses">-</strong>
+            </div>
+
+            <div class="result-box">
+                <span>Usable Hosts</span>
+                <strong id="usableHosts">-</strong>
+            </div>
+
+            <div class="result-box">
+                <span>IP Class</span>
+                <strong id="ipClass">-</strong>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <section class="info-section">
+
+        <h2>What is an IP Calculator?</h2>
+
+        <p>
+            An IP Calculator is a networking tool used to calculate
+            IPv4 subnet information such as network address, broadcast
+            address, subnet mask, usable IP range and number of hosts.
+        </p>
+
+        <h2>Example</h2>
+
+        <p>
+            For <strong>192.168.10.10/27</strong>:
+        </p>
+
+        <ul>
+            <li>Subnet Mask: 255.255.255.224</li>
+            <li>Network Address: 192.168.10.0</li>
+            <li>Broadcast Address: 192.168.10.31</li>
+            <li>First Usable IP: 192.168.10.1</li>
+            <li>Last Usable IP: 192.168.10.30</li>
+            <li>Usable Hosts: 30</li>
+        </ul>
+
+    </section>
+
+</main>
+
+
+<footer>
+    <p>© 2026 IP Calculator | Free Networking Tool</p>
+</footer>
+
+<script src="script.js"></script>
+
+</body>
+</html>
