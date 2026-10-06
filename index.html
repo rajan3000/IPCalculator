@@ -13,10 +13,46 @@
 
 <body>
 
+<nav class="navbar">
+
+    <div class="nav-container">
+
+        <a href="index.html" class="logo">
+            Mr. Rajan...
+        </a>
+
+        <div class="nav-links">
+
+            <a href="index.html">IP Calculator</a>
+
+            <a href="subnet.html">Subnet</a>
+
+            <a href="cidr.html">CIDR</a>
+
+            <a href="range.html">IP Range</a>
+
+            <a href="same-network.html">
+                Same Network
+            </a>
+
+        </div>
+
+    </div>
+
+</nav>
+
 <header>
-    <div class="container">
-        <h1>IP Calculator</h1>
-        <p>IPv4 Subnet & Network Calculator</p>
+    <div class="container header-content">
+
+        <div>
+            <h1>IP Calculator</h1>
+            <p>IPv4 Subnet & Network Calculator</p>
+        </div>
+
+        <button id="themeButton" onclick="toggleTheme()">
+            🌙 Dark Mode
+        </button>
+
     </div>
 </header>
 
@@ -33,13 +69,14 @@
                 <input
                     type="text"
                     id="ipAddress"
-                    placeholder="192.168.10.10"
-                    value="192.168.10.10">
+                    placeholder="192.168.xx.xxx"
+                    value="192.168.xx.xxx">
             </div>
 
             <div class="input-group">
                 <label for="cidr">CIDR</label>
                 <select id="cidr">
+                    <option value="xx" selected>/xx</option>
                     <option value="8">/8</option>
                     <option value="9">/9</option>
                     <option value="10">/10</option>
@@ -56,7 +93,7 @@
                     <option value="21">/21</option>
                     <option value="22">/22</option>
                     <option value="23">/23</option>
-                    <option value="24" selected>/24</option>
+                    <option value="24">/24</option>
                     <option value="25">/25</option>
                     <option value="26">/26</option>
                     <option value="27">/27</option>
@@ -68,7 +105,19 @@
 
         </div>
 
-        <button onclick="calculateIP()">Calculate</button>
+        <!-- <button onclick="calculateIP()">Calculate</button> -->
+
+    <div class="button-row">
+
+        <button onclick="calculateIP()">
+            Calculate
+        </button>
+
+        <button class="secondary-btn" onclick="resetCalculator()">
+            🔄 Reset
+        </button>
+
+    </div>
 
         <p id="error" class="error"></p>
 
@@ -78,6 +127,14 @@
     <section id="resultSection" class="result-section">
 
         <h2>Calculation Result</h2>
+
+    <div class="copy-row">
+
+        <button class="copy-btn" onclick="copyResults()">
+            📋 Copy Result
+        </button>
+
+    </div>
 
         <div class="result-grid">
 
@@ -135,6 +192,115 @@
 
     </section>
 
+        <section class="tools-section">
+
+        <h2>Free Networking Tools</h2>
+
+        <div class="tools-grid">
+
+            <a href="index.html" class="tool-card">
+                <h3>IP Calculator</h3>
+                <p>
+                    Calculate IPv4 network information.
+                </p>
+            </a>
+
+            <a href="subnet.html" class="tool-card">
+                <h3>Subnet Calculator</h3>
+                <p>
+                    Calculate subnet mask and usable hosts.
+                </p>
+            </a>
+
+            <a href="cidr.html" class="tool-card">
+                <h3>CIDR Calculator</h3>
+                <p>
+                    Calculate CIDR network details.
+                </p>
+            </a>
+
+            <a href="range.html" class="tool-card">
+                <h3>IP Range Calculator</h3>
+                <p>
+                    Find IP ranges and total addresses.
+                </p>
+            </a>
+
+            <a href="same-network.html" class="tool-card">
+                <h3>Same Network Checker</h3>
+                <p>
+                    Check whether two IPs are in the same network.
+                </p>
+            </a>
+
+        </div>
+
+    </section>
+
+    <section class="calculator-card">
+
+        <h2>Same Network Checker</h2>
+
+        <p>
+            Check whether two IPv4 addresses belong to the same network.
+        </p>
+
+        <div class="input-row">
+
+            <div class="input-group">
+
+                <label>IP Address 1</label>
+
+                <input
+                    type="text"
+                    id="ip1"
+                    placeholder="192.168.xx.xxx">
+
+            </div>
+
+
+            <div class="input-group">
+
+                <label>IP Address 2</label>
+
+                <input
+                    type="text"
+                    id="ip2"
+                    placeholder="192.168.xx.xxx">
+
+            </div>
+
+        </div>
+
+
+        <div class="input-group">
+
+            <label>CIDR</label>
+
+            <select id="networkCIDR">
+
+                <option value="24">/24</option>
+                <option value="25">/25</option>
+                <option value="26">/26</option>
+                <option value="27">/27</option>
+                <option value="28">/28</option>
+                <option value="29">/29</option>
+                <option value="30">/30</option>
+
+            </select>
+
+        </div>
+
+
+        <button onclick="checkSameNetwork()">
+            Check Network
+        </button>
+
+
+        <div id="networkResult" class="network-result"></div>
+
+    </section>
+
 
     <section class="info-section">
 
@@ -167,7 +333,7 @@
 
 
 <footer>
-    <p>© 2026 IP Calculator | Free Networking Tool</p>
+    <p>© 2026 IP Calculator | Free Networking Tool | Designed & Developed by Mr. Rajan...</p>
 </footer>
 
 <script src="script.js"></script>
