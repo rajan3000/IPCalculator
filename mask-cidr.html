@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Subnet Mask to CIDR Converter - NetToolsHub</title>
+
+    <meta name="description"
+        content="Convert IPv4 subnet mask to CIDR and CIDR prefix to subnet mask with this free online calculator.">
+
+    <meta name="keywords"
+        content="subnet mask converter, CIDR converter, subnet mask to CIDR, CIDR to subnet mask, IPv4 calculator">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+
+            <h1>Subnet Mask ↔ CIDR Converter</h1>
+
+            <p>
+                Convert IPv4 Subnet Mask to CIDR and CIDR to Subnet Mask
+            </p>
+
+        </div>
+    </header>
+
+
+    <!-- Main -->
+    <main class="container">
+
+        <!-- Calculator -->
+        <section class="card">
+
+            <h2>Subnet Mask / CIDR Converter</h2>
+
+            <p class="description">
+                Enter either a subnet mask or CIDR prefix and convert
+                it instantly.
+            </p>
+
+
+            <!-- Subnet Mask -->
+            <div class="input-group">
+
+                <label for="subnetMask">
+                    Subnet Mask
+                </label>
+
+                <input
+                    type="text"
+                    id="subnetMask"
+                    placeholder="Example: 255.255.255.0"
+                    autocomplete="off"
+                >
+
+                <small>
+                    Example: 255.255.255.0
+                </small>
+
+            </div>
+
+
+            <!-- CIDR -->
+            <div class="input-group">
+
+                <label for="cidr">
+
+                    CIDR Prefix
+
+                </label>
+
+                <input
+                    type="text"
+                    id="cidr"
+                    placeholder="Example: /24 or 24"
+                    autocomplete="off"
+                >
+
+                <small>
+                    Enter /24 or simply 24
+                </small>
+
+            </div>
+
+
+            <!-- Buttons -->
+            <div class="button-group">
+
+                <button
+                    type="button"
+                    class="btn-primary"
+                    onclick="convertMaskToCIDR()">
+
+                    Mask → CIDR
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="btn-primary"
+                    onclick="convertCIDRToMask()">
+
+                    CIDR → Mask
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="btn-secondary"
+                    onclick="loadMaskCIDRExample()">
+
+                    Example
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="btn-danger"
+                    onclick="resetMaskCIDR()">
+
+                    Reset
+
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- Error -->
+        <div
+            id="maskCIDRError"
+            class="error-message"
+            style="display:none;">
+        </div>
+
+
+        <!-- Result -->
+        <section
+            id="maskCIDRResult"
+            class="card"
+            style="display:none;">
+
+            <div class="result-header">
+
+                <h2>Conversion Result</h2>
+
+                <button
+                    type="button"
+                    class="btn-secondary"
+                    onclick="copyMaskCIDRResult()">
+
+                    Copy Result
+
+                </button>
+
+            </div>
+
+
+            <!-- Results Grid -->
+            <div class="result-grid">
+
+                <div class="result-item">
+
+                    <span>Subnet Mask</span>
+
+                    <strong id="resultMask">
+                        -
+                    </strong>
+
+                </div>
+
+
+                <div class="result-item">
+
+                    <span>CIDR Prefix</span>
+
+                    <strong id="resultCIDR">
+                        -
+                    </strong>
+
+                </div>
+
+
+                <div class="result-item">
+
+                    <span>Network Bits</span>
+
+                    <strong id="resultNetworkBits">
+                        -
+                    </strong>
+
+                </div>
+
+
+                <div class="result-item">
+
+                    <span>Host Bits</span>
+
+                    <strong id="resultHostBits">
+                        -
+                    </strong>
+
+                </div>
+
+
+                <div class="result-item">
+
+                    <span>Total IP Addresses</span>
+
+                    <strong id="resultTotalIPs">
+                        -
+                    </strong>
+
+                </div>
+
+
+                <div class="result-item">
+
+                    <span>Usable Hosts</span>
+
+                    <strong id="resultUsableHosts">
+                        -
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- Binary -->
+            <div class="input-group" style="margin-top:25px;">
+
+                <label>
+                    Binary Subnet Mask
+                </label>
+
+                <div class="info-box">
+
+                    <strong id="resultBinary">
+                        -
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Common Table -->
+        <section class="card">
+
+            <h2>Common Subnet Mask & CIDR Table</h2>
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>CIDR</th>
+                            <th>Subnet Mask</th>
+                            <th>Host Bits</th>
+                            <th>Total IPs</th>
+                            <th>Usable Hosts</th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        <tr>
+                            <td>/16</td>
+                            <td>255.255.0.0</td>
+                            <td>16</td>
+                            <td>65,536</td>
+                            <td>65,534</td>
+                        </tr>
+
+                        <tr>
+                            <td>/20</td>
+                            <td>255.255.240.0</td>
+                            <td>12</td>
+                            <td>4,096</td>
+                            <td>4,094</td>
+                        </tr>
+
+                        <tr>
+                            <td>/21</td>
+                            <td>255.255.248.0</td>
+                            <td>11</td>
+                            <td>2,048</td>
+                            <td>2,046</td>
+                        </tr>
+
+                        <tr>
+                            <td>/22</td>
+                            <td>255.255.252.0</td>
+                            <td>10</td>
+                            <td>1,024</td>
+                            <td>1,022</td>
+                        </tr>
+
+                        <tr>
+                            <td>/23</td>
+                            <td>255.255.254.0</td>
+                            <td>9</td>
+                            <td>512</td>
+                            <td>510</td>
+                        </tr>
+
+                        <tr>
+                            <td>/24</td>
+                            <td>255.255.255.0</td>
+                            <td>8</td>
+                            <td>256</td>
+                            <td>254</td>
+                        </tr>
+
+                        <tr>
+                            <td>/25</td>
+                            <td>255.255.255.128</td>
+                            <td>7</td>
+                            <td>128</td>
+                            <td>126</td>
+                        </tr>
+
+                        <tr>
+                            <td>/26</td>
+                            <td>255.255.255.192</td>
+                            <td>6</td>
+                            <td>64</td>
+                            <td>62</td>
+                        </tr>
+
+                        <tr>
+                            <td>/27</td>
+                            <td>255.255.255.224</td>
+                            <td>5</td>
+                            <td>32</td>
+                            <td>30</td>
+                        </tr>
+
+                        <tr>
+                            <td>/28</td>
+                            <td>255.255.255.240</td>
+                            <td>4</td>
+                            <td>16</td>
+                            <td>14</td>
+                        </tr>
+
+                        <tr>
+                            <td>/29</td>
+                            <td>255.255.255.248</td>
+                            <td>3</td>
+                            <td>8</td>
+                            <td>6</td>
+                        </tr>
+
+                        <tr>
+                            <td>/30</td>
+                            <td>255.255.255.252</td>
+                            <td>2</td>
+                            <td>4</td>
+                            <td>2</td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <!-- Information -->
+        <section class="card">
+
+            <h2>What is CIDR?</h2>
+
+            <p>
+                CIDR stands for
+                <strong>Classless Inter-Domain Routing</strong>.
+            </p>
+
+            <p>
+                A CIDR prefix such as <strong>/24</strong> means
+                that 24 bits are used for the network portion and
+                8 bits remain for the host portion.
+            </p>
+
+            <div class="info-box">
+
+                <p>
+                    <strong>/24</strong>
+                    =
+                    <strong>255.255.255.0</strong>
+                </p>
+
+                <p>
+                    <strong>/26</strong>
+                    =
+                    <strong>255.255.255.192</strong>
+                </p>
+
+                <p>
+                    <strong>/28</strong>
+                    =
+                    <strong>255.255.255.240</strong>
+                </p>
+
+            </div>
+
+
+            <h3>Example</h3>
+
+            <p>
+                If you enter:
+            </p>
+
+            <p>
+                <strong>255.255.255.192</strong>
+            </p>
+
+            <p>
+                the calculator returns:
+            </p>
+
+            <p>
+                <strong>/26</strong>
+            </p>
+
+        </section>
+
+    </main>
+
+
+    <!-- Footer -->
+    <footer>
+
+        <div class="container">
+
+            <p>
+                © 2026 NetToolsHub.com
+            </p>
+
+            <p>
+                Networking Tools for IT Professionals
+            </p>
+
+        </div>
+
+    </footer>
+
+
+    <!-- JavaScript -->
+    <script src="mask-cidr.js"></script>
+
+</body>
+
+</html>

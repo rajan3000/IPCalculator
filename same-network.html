@@ -1,1 +1,370 @@
-Check whether two IPv4 addresses belong to the same network.
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description"
+        content="Free Same Network Checker. Check whether two IPv4 addresses belong to the same network using CIDR subnetting.">
+
+    <title>Same Network Checker - NetToolsHub</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="header">
+
+    <div class="container">
+
+        <h1>Same Network Checker</h1>
+
+        <p>Check Whether Two IPv4 Addresses Are on the Same Network</p>
+
+    </div>
+
+</header>
+
+
+<main class="container">
+
+    <!-- Calculator -->
+
+    <section class="card">
+
+        <h2>IPv4 Same Network Checker</h2>
+
+        <p>
+            Enter two IPv4 addresses and a CIDR prefix to check
+            whether both addresses belong to the same network.
+        </p>
+
+
+        <!-- IP 1 -->
+
+        <div class="form-group">
+
+            <label for="ip1">
+                IP Address 1
+            </label>
+
+            <input
+                type="text"
+                id="ip1"
+                value="192.168.10.10"
+                placeholder="Example: 192.168.10.10"
+            >
+
+        </div>
+
+
+        <!-- IP 2 -->
+
+        <div class="form-group">
+
+            <label for="ip2">
+                IP Address 2
+            </label>
+
+            <input
+                type="text"
+                id="ip2"
+                value="192.168.10.20"
+                placeholder="Example: 192.168.10.20"
+            >
+
+        </div>
+
+
+        <!-- CIDR -->
+
+        <div class="form-group">
+
+            <label for="cidr">
+                CIDR Prefix
+            </label>
+
+            <select id="cidr">
+
+                <option value="8">/8</option>
+                <option value="9">/9</option>
+                <option value="10">/10</option>
+                <option value="11">/11</option>
+                <option value="12">/12</option>
+                <option value="13">/13</option>
+                <option value="14">/14</option>
+                <option value="15">/15</option>
+                <option value="16">/16</option>
+                <option value="17">/17</option>
+                <option value="18">/18</option>
+                <option value="19">/19</option>
+                <option value="20">/20</option>
+                <option value="21">/21</option>
+                <option value="22">/22</option>
+                <option value="23">/23</option>
+
+                <option value="24" selected>/24</option>
+
+                <option value="25">/25</option>
+                <option value="26">/26</option>
+                <option value="27">/27</option>
+                <option value="28">/28</option>
+                <option value="29">/29</option>
+                <option value="30">/30</option>
+                <option value="31">/31</option>
+                <option value="32">/32</option>
+
+            </select>
+
+        </div>
+
+
+        <!-- Examples -->
+
+        <div class="example-buttons">
+
+            <button onclick="setExample(
+                '192.168.10.10',
+                '192.168.10.20',
+                24
+            )">
+
+                Same Network
+
+            </button>
+
+
+            <button onclick="setExample(
+                '192.168.10.10',
+                '192.168.20.10',
+                24
+            )">
+
+                Different Network
+
+            </button>
+
+
+            <button onclick="setExample(
+                '192.168.10.10',
+                '192.168.10.40',
+                27
+            )">
+
+                /27 Example
+
+            </button>
+
+        </div>
+
+
+        <!-- Buttons -->
+
+        <div class="button-group">
+
+            <button
+                class="calculate-btn"
+                onclick="checkSameNetwork()">
+
+                Check Network
+
+            </button>
+
+
+            <button
+                class="reset-btn"
+                onclick="resetNetwork()">
+
+                Reset
+
+            </button>
+
+        </div>
+
+
+        <p id="errorMessage" class="error"></p>
+
+    </section>
+
+
+    <!-- Main Result -->
+
+    <section class="card">
+
+        <h2>Network Result</h2>
+
+
+        <div id="networkStatus"
+             class="network-status">
+
+            -
+
+        </div>
+
+
+        <div class="result-grid">
+
+
+            <div class="result-item">
+
+                <span>IP Address 1</span>
+
+                <strong id="resultIP1">-</strong>
+
+            </div>
+
+
+            <div class="result-item">
+
+                <span>IP Address 2</span>
+
+                <strong id="resultIP2">-</strong>
+
+            </div>
+
+
+            <div class="result-item">
+
+                <span>CIDR</span>
+
+                <strong id="resultCIDR">-</strong>
+
+            </div>
+
+
+            <div class="result-item">
+
+                <span>Subnet Mask</span>
+
+                <strong id="subnetMask">-</strong>
+
+            </div>
+
+
+            <div class="result-item">
+
+                <span>Network of IP 1</span>
+
+                <strong id="network1">-</strong>
+
+            </div>
+
+
+            <div class="result-item">
+
+                <span>Network of IP 2</span>
+
+                <strong id="network2">-</strong>
+
+            </div>
+
+
+            <div class="result-item">
+
+                <span>Broadcast of Network 1</span>
+
+                <strong id="broadcast1">-</strong>
+
+            </div>
+
+
+            <div class="result-item">
+
+                <span>Broadcast of Network 2</span>
+
+                <strong id="broadcast2">-</strong>
+
+            </div>
+
+        </div>
+
+
+        <button
+            class="copy-btn"
+            onclick="copyNetworkResult()">
+
+            📋 Copy Result
+
+        </button>
+
+    </section>
+
+
+    <!-- Explanation -->
+
+    <section class="card info">
+
+        <h2>How Does Same Network Checking Work?</h2>
+
+        <p>
+            Two IPv4 addresses are considered to be in the same
+            network when their network addresses are the same
+            for the selected subnet mask.
+        </p>
+
+
+        <h3>Example 1 - Same Network</h3>
+
+        <div class="cidr-example">
+
+            192.168.10.10/24<br>
+            192.168.10.20/24
+
+        </div>
+
+        <p>
+            Both addresses belong to:
+            <strong>192.168.10.0/24</strong>
+        </p>
+
+
+        <h3>Example 2 - Different Network</h3>
+
+        <div class="cidr-example">
+
+            192.168.10.10/24<br>
+            192.168.20.10/24
+
+        </div>
+
+        <p>
+            IP 1 belongs to:
+            <strong>192.168.10.0/24</strong>
+            <br><br>
+
+            IP 2 belongs to:
+            <strong>192.168.20.0/24</strong>
+        </p>
+
+
+        <h3>Important</h3>
+
+        <p>
+            The result depends on the selected CIDR prefix.
+            The same two IP addresses can be in the same network
+            with one subnet mask and in different networks with
+            another subnet mask.
+        </p>
+
+    </section>
+
+</main>
+
+
+<footer class="footer">
+
+    <p>
+        © 2026 NetToolsHub - Same Network Checker
+    </p>
+
+</footer>
+
+
+<script src="same-network.js"></script>
+
+</body>
+
+</html>

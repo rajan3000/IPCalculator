@@ -1,5 +1,341 @@
-Start IP:
-192.168.10.10
+<!DOCTYPE html>
+<html lang="en">
 
-End IP:
-192.168.10.50
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description"
+        content="Free IPv4 IP Range Calculator. Calculate total IP addresses, IP range, usable addresses and CIDR summary.">
+
+    <title>IP Range Calculator - NetToolsHub</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="header">
+
+    <div class="container">
+
+        <h1>IP Range Calculator</h1>
+
+        <p>IPv4 Start IP & End IP Calculator</p>
+
+    </div>
+
+</header>
+
+
+<main class="container">
+
+    <!-- Calculator -->
+
+    <section class="card">
+
+        <h2>IPv4 IP Range Calculator</h2>
+
+        <p>
+            Enter the starting and ending IPv4 addresses to
+            calculate the complete IP range.
+        </p>
+
+
+        <div class="form-group">
+
+            <label for="startIP">
+                Start IP Address
+            </label>
+
+            <input
+                type="text"
+                id="startIP"
+                value="192.168.10.1"
+                placeholder="Example: 192.168.10.1"
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="endIP">
+                End IP Address
+            </label>
+
+            <input
+                type="text"
+                id="endIP"
+                value="192.168.10.30"
+                placeholder="Example: 192.168.10.30"
+            >
+
+        </div>
+
+
+        <!-- Examples -->
+
+        <div class="example-buttons">
+
+            <button onclick="setExample('192.168.10.1','192.168.10.30')">
+                /27 Range
+            </button>
+
+            <button onclick="setExample('192.168.1.1','192.168.1.254')">
+                /24 Usable Range
+            </button>
+
+            <button onclick="setExample('10.0.0.1','10.0.0.100')">
+                10.0.0 Range
+            </button>
+
+        </div>
+
+
+        <div class="button-group">
+
+            <button
+                class="calculate-btn"
+                onclick="calculateRange()">
+
+                Calculate
+
+            </button>
+
+
+            <button
+                class="reset-btn"
+                onclick="resetRange()">
+
+                Reset
+
+            </button>
+
+        </div>
+
+
+        <p id="errorMessage" class="error"></p>
+
+    </section>
+
+
+    <!-- Result -->
+
+    <section class="card">
+
+        <h2>IP Range Result</h2>
+
+
+        <div class="result-grid">
+
+
+            <div class="result-item">
+
+                <span>Start IP</span>
+
+                <strong id="resultStartIP">-</strong>
+
+            </div>
+
+
+            <div class="result-item">
+
+                <span>End IP</span>
+
+                <strong id="resultEndIP">-</strong>
+
+            </div>
+
+
+            <div class="result-item">
+
+                <span>Total IP Addresses</span>
+
+                <strong id="totalIPs">-</strong>
+
+            </div>
+
+
+            <div class="result-item">
+
+                <span>First IP</span>
+
+                <strong id="firstIP">-</strong>
+
+            </div>
+
+
+            <div class="result-item">
+
+                <span>Last IP</span>
+
+                <strong id="lastIP">-</strong>
+
+            </div>
+
+
+            <div class="result-item">
+
+                <span>IP Range Size</span>
+
+                <strong id="rangeSize">-</strong>
+
+            </div>
+
+
+            <div class="result-item">
+
+                <span>Starting IP Class</span>
+
+                <strong id="ipClass">-</strong>
+
+            </div>
+
+
+            <div class="result-item">
+
+                <span>CIDR Summary</span>
+
+                <strong id="cidrSummary">-</strong>
+
+            </div>
+
+
+            <div class="result-item">
+
+                <span>Network Address</span>
+
+                <strong id="networkAddress">-</strong>
+
+            </div>
+
+
+            <div class="result-item">
+
+                <span>Broadcast Address</span>
+
+                <strong id="broadcastAddress">-</strong>
+
+            </div>
+
+        </div>
+
+
+        <button
+            class="copy-btn"
+            onclick="copyRangeResult()">
+
+            📋 Copy Result
+
+        </button>
+
+    </section>
+
+
+    <!-- Information -->
+
+    <section class="card info">
+
+        <h2>What is an IP Range?</h2>
+
+        <p>
+            An IP range is a continuous group of IPv4 addresses
+            between a starting IP address and an ending IP address.
+        </p>
+
+
+        <h3>Example</h3>
+
+        <div class="cidr-example">
+
+            192.168.10.1 - 192.168.10.30
+
+        </div>
+
+
+        <p>
+            This range contains
+            <strong>30 IP addresses</strong>.
+        </p>
+
+
+        <h3>Common IP Ranges</h3>
+
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>Range</th>
+                        <th>Total IPs</th>
+                        <th>Common Use</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    <tr>
+
+                        <td>192.168.1.1 - 192.168.1.254</td>
+
+                        <td>254</td>
+
+                        <td>Local Network</td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>10.0.0.1 - 10.255.255.254</td>
+
+                        <td>16,777,214</td>
+
+                        <td>Private Network</td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>172.16.0.1 - 172.31.255.254</td>
+
+                        <td>1,048,574</td>
+
+                        <td>Private Network</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<footer class="footer">
+
+    <p>
+        © 2026 NetToolsHub - IP Range Calculator
+    </p>
+
+</footer>
+
+
+<script src="range.js"></script>
+
+</body>
+
+</html>

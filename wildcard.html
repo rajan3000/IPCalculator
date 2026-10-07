@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Wildcard Mask Calculator - NetToolsHub</title>
+
+    <meta name="description"
+        content="Free IPv4 Wildcard Mask Calculator. Convert subnet mask or CIDR to wildcard mask.">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header>
+    <div class="container">
+        <h1>Wildcard Mask Calculator</h1>
+        <p>Convert Subnet Mask or CIDR to Wildcard Mask</p>
+    </div>
+</header>
+
+
+<main class="container">
+
+    <!-- Calculator -->
+    <section class="card">
+
+        <h2>Wildcard Mask Calculator</h2>
+
+        <p class="description">
+            Enter a subnet mask or CIDR prefix to calculate the
+            corresponding wildcard mask.
+        </p>
+
+
+        <!-- Subnet Mask -->
+        <div class="input-group">
+
+            <label for="subnetMask">
+                Subnet Mask
+            </label>
+
+            <input
+                type="text"
+                id="subnetMask"
+                placeholder="Example: 255.255.255.0"
+                autocomplete="off"
+            >
+
+        </div>
+
+
+        <!-- CIDR -->
+        <div class="input-group">
+
+            <label for="cidr">
+                CIDR Prefix
+            </label>
+
+            <input
+                type="text"
+                id="cidr"
+                placeholder="Example: /24 or 24"
+                autocomplete="off"
+            >
+
+        </div>
+
+
+        <!-- Buttons -->
+        <div class="button-group">
+
+            <button
+                type="button"
+                class="btn-primary"
+                onclick="calculateFromMask()">
+
+                Mask → Wildcard
+
+            </button>
+
+
+            <button
+                type="button"
+                class="btn-primary"
+                onclick="calculateFromCIDR()">
+
+                CIDR → Wildcard
+
+            </button>
+
+
+            <button
+                type="button"
+                class="btn-secondary"
+                onclick="loadWildcardExample()">
+
+                Example
+
+            </button>
+
+
+            <button
+                type="button"
+                class="btn-danger"
+                onclick="resetWildcard()">
+
+                Reset
+
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- Error -->
+    <div
+        id="wildcardError"
+        class="error-message"
+        style="display:none;">
+    </div>
+
+
+    <!-- Result -->
+    <section
+        id="wildcardResult"
+        class="card"
+        style="display:none;">
+
+        <div class="result-header">
+
+            <h2>Wildcard Result</h2>
+
+            <button
+                type="button"
+                class="btn-secondary"
+                onclick="copyWildcardResult()">
+
+                Copy Result
+
+            </button>
+
+        </div>
+
+
+        <div class="result-grid">
+
+            <div class="result-item">
+
+                <span>Subnet Mask</span>
+
+                <strong id="resultMask">
+                    -
+                </strong>
+
+            </div>
+
+
+            <div class="result-item">
+
+                <span>CIDR</span>
+
+                <strong id="resultCIDR">
+                    -
+                </strong>
+
+            </div>
+
+
+            <div class="result-item">
+
+                <span>Wildcard Mask</span>
+
+                <strong id="resultWildcard">
+                    -
+                </strong>
+
+            </div>
+
+
+            <div class="result-item">
+
+                <span>Network Bits</span>
+
+                <strong id="resultNetworkBits">
+                    -
+                </strong>
+
+            </div>
+
+
+            <div class="result-item">
+
+                <span>Host Bits</span>
+
+                <strong id="resultHostBits">
+                    -
+                </strong>
+
+            </div>
+
+
+            <div class="result-item">
+
+                <span>Total IP Addresses</span>
+
+                <strong id="resultTotalIPs">
+                    -
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- Binary -->
+        <div class="input-group" style="margin-top:25px;">
+
+            <label>
+                Binary Wildcard Mask
+            </label>
+
+            <div class="info-box">
+
+                <strong id="resultBinary">
+                    -
+                </strong>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- Common Table -->
+    <section class="card">
+
+        <h2>Common Wildcard Masks</h2>
+
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>CIDR</th>
+                        <th>Subnet Mask</th>
+                        <th>Wildcard Mask</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    <tr>
+                        <td>/16</td>
+                        <td>255.255.0.0</td>
+                        <td>0.0.255.255</td>
+                    </tr>
+
+                    <tr>
+                        <td>/20</td>
+                        <td>255.255.240.0</td>
+                        <td>0.0.15.255</td>
+                    </tr>
+
+                    <tr>
+                        <td>/21</td>
+                        <td>255.255.248.0</td>
+                        <td>0.0.7.255</td>
+                    </tr>
+
+                    <tr>
+                        <td>/22</td>
+                        <td>255.255.252.0</td>
+                        <td>0.0.3.255</td>
+                    </tr>
+
+                    <tr>
+                        <td>/23</td>
+                        <td>255.255.254.0</td>
+                        <td>0.0.1.255</td>
+                    </tr>
+
+                    <tr>
+                        <td>/24</td>
+                        <td>255.255.255.0</td>
+                        <td>0.0.0.255</td>
+                    </tr>
+
+                    <tr>
+                        <td>/25</td>
+                        <td>255.255.255.128</td>
+                        <td>0.0.0.127</td>
+                    </tr>
+
+                    <tr>
+                        <td>/26</td>
+                        <td>255.255.255.192</td>
+                        <td>0.0.0.63</td>
+                    </tr>
+
+                    <tr>
+                        <td>/27</td>
+                        <td>255.255.255.224</td>
+                        <td>0.0.0.31</td>
+                    </tr>
+
+                    <tr>
+                        <td>/28</td>
+                        <td>255.255.255.240</td>
+                        <td>0.0.0.15</td>
+                    </tr>
+
+                    <tr>
+                        <td>/29</td>
+                        <td>255.255.255.248</td>
+                        <td>0.0.0.7</td>
+                    </tr>
+
+                    <tr>
+                        <td>/30</td>
+                        <td>255.255.255.252</td>
+                        <td>0.0.0.3</td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+
+    <!-- Information -->
+    <section class="card">
+
+        <h2>What is a Wildcard Mask?</h2>
+
+        <p>
+            A wildcard mask is the inverse of a subnet mask.
+            Each subnet-mask bit is reversed to calculate the
+            corresponding wildcard-mask bit.
+        </p>
+
+
+        <div class="info-box">
+
+            <p>
+                Subnet Mask:
+                <strong>255.255.255.0</strong>
+            </p>
+
+            <p>
+                Wildcard Mask:
+                <strong>0.0.0.255</strong>
+            </p>
+
+        </div>
+
+
+        <h3>Common Use</h3>
+
+        <p>
+            Wildcard masks are commonly used in networking
+            configurations such as Cisco ACLs and routing protocols.
+        </p>
+
+
+        <h3>Example</h3>
+
+        <p>
+            For:
+            <strong>192.168.10.0/24</strong>
+        </p>
+
+        <p>
+            Subnet Mask:
+            <strong>255.255.255.0</strong>
+        </p>
+
+        <p>
+            Wildcard Mask:
+            <strong>0.0.0.255</strong>
+        </p>
+
+    </section>
+
+</main>
+
+
+<footer>
+
+    <div class="container">
+
+        <p>
+            © 2026 NetToolsHub.com
+        </p>
+
+        <p>
+            Networking Tools for IT Professionals
+        </p>
+
+    </div>
+
+</footer>
+
+
+<script src="wildcard.js"></script>
+
+</body>
+</html>

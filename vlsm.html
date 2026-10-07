@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>VLSM Calculator - Variable Length Subnet Masking</title>
+
+    <meta name="description"
+          content="Free VLSM Calculator to divide an IPv4 network into variable length subnets based on host requirements.">
+
+    <meta name="keywords"
+          content="VLSM calculator, variable length subnet mask, subnet calculator, IPv4 VLSM, networking tools">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <h1>VLSM Calculator</h1>
+            <p>Variable Length Subnet Masking Calculator</p>
+        </div>
+    </header>
+
+
+    <!-- Main Content -->
+    <main class="container">
+
+        <!-- Calculator Card -->
+        <section class="card">
+
+            <h2>VLSM Subnet Planner</h2>
+
+            <p class="description">
+                Enter a parent IPv4 network and required hosts for each subnet.
+                The calculator will allocate subnets from largest to smallest.
+            </p>
+
+
+            <!-- Parent Network -->
+            <div class="input-group">
+
+                <label for="parentNetwork">
+                    Parent Network (CIDR)
+                </label>
+
+                <input
+                    type="text"
+                    id="parentNetwork"
+                    placeholder="Example: 192.168.10.0/24"
+                    value="192.168.10.0/24"
+                >
+
+            </div>
+
+
+            <!-- Host Requirements -->
+            <div class="input-group">
+
+                <label for="requirements">
+                    Subnet Name and Required Hosts
+                </label>
+
+                <textarea
+                    id="requirements"
+                    placeholder="Enter one subnet per line
+
+Example:
+Office,100
+Support,50
+Cameras,20
+Management,10"
+                >Office,100
+Support,50
+Cameras,20
+Management,10</textarea>
+
+                <small>
+                    Format: Subnet Name, Hosts
+                    <br>
+                    Example: Office,100
+                </small>
+
+            </div>
+
+
+            <!-- Buttons -->
+            <div class="button-group">
+
+                <button
+                    type="button"
+                    onclick="calculateVLSM()"
+                    class="btn-primary">
+                    Calculate VLSM
+                </button>
+
+                <button
+                    type="button"
+                    onclick="loadVLSMExample()"
+                    class="btn-secondary">
+                    Example
+                </button>
+
+                <button
+                    type="button"
+                    onclick="resetVLSM()"
+                    class="btn-danger">
+                    Reset
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- Error Message -->
+        <div
+            id="errorMessage"
+            class="error-message"
+            style="display:none;">
+        </div>
+
+
+        <!-- Summary -->
+        <section
+            id="vlsmSummary"
+            class="vlsm-summary"
+            style="display:none;">
+
+            <div class="summary-box">
+
+                <span>Parent Network</span>
+
+                <strong id="summaryParent">
+                    -
+                </strong>
+
+            </div>
+
+
+            <div class="summary-box">
+
+                <span>Total Addresses</span>
+
+                <strong id="summaryTotal">
+                    -
+                </strong>
+
+            </div>
+
+
+            <div class="summary-box">
+
+                <span>Allocated Addresses</span>
+
+                <strong id="summaryAllocated">
+                    -
+                </strong>
+
+            </div>
+
+
+            <div class="summary-box">
+
+                <span>Remaining Addresses</span>
+
+                <strong id="summaryRemaining">
+                    -
+                </strong>
+
+            </div>
+
+        </section>
+
+
+        <!-- Results -->
+        <section
+            id="vlsmResults"
+            class="card"
+            style="display:none;">
+
+            <div class="result-header">
+
+                <h2>VLSM Allocation</h2>
+
+                <button
+                    type="button"
+                    onclick="copyVLSMResult()"
+                    class="btn-secondary">
+                    Copy Result
+                </button>
+
+            </div>
+
+
+            <p class="description">
+                Subnets are allocated from largest host requirement
+                to smallest requirement.
+            </p>
+
+
+            <!-- Table -->
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>#</th>
+
+                            <th>Subnet</th>
+
+                            <th>Required Hosts</th>
+
+                            <th>CIDR</th>
+
+                            <th>Subnet Mask</th>
+
+                            <th>Network</th>
+
+                            <th>First Usable</th>
+
+                            <th>Last Usable</th>
+
+                            <th>Broadcast</th>
+
+                            <th>Total IPs</th>
+
+                            <th>Usable Hosts</th>
+
+                            <th>Spare Hosts</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="vlsmTableBody">
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <!-- Free Space -->
+        <section
+            id="freeSpace"
+            class="card"
+            style="display:none;">
+
+            <h2>Remaining Address Space</h2>
+
+            <div class="result-grid">
+
+                <div class="result-item">
+
+                    <span>Next Free IP</span>
+
+                    <strong id="nextFreeIP">-</strong>
+
+                </div>
+
+                <div class="result-item">
+
+                    <span>Remaining IPs</span>
+
+                    <strong id="remainingIPs">-</strong>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Information -->
+        <section class="card">
+
+            <h2>What is VLSM?</h2>
+
+            <p>
+                VLSM stands for
+                <strong>Variable Length Subnet Masking</strong>.
+                It allows different subnets inside the same parent
+                network to have different sizes.
+            </p>
+
+            <p>
+                For example, if one department needs 100 hosts and
+                another needs only 10 hosts, VLSM can allocate a
+                larger subnet to the first department and a smaller
+                subnet to the second department.
+            </p>
+
+
+            <h3>Example</h3>
+
+            <div class="info-box">
+
+                <p>
+                    Parent Network:
+                    <strong>192.168.10.0/24</strong>
+                </p>
+
+                <p>
+                    Office: 100 hosts →
+                    <strong>192.168.10.0/25</strong>
+                </p>
+
+                <p>
+                    Support: 50 hosts →
+                    <strong>192.168.10.128/26</strong>
+                </p>
+
+                <p>
+                    Cameras: 20 hosts →
+                    <strong>192.168.10.192/27</strong>
+                </p>
+
+                <p>
+                    Management: 10 hosts →
+                    <strong>192.168.10.224/28</strong>
+                </p>
+
+            </div>
+
+
+            <h3>Why Largest First?</h3>
+
+            <p>
+                VLSM normally allocates the largest host requirement
+                first. This helps maintain proper subnet boundaries
+                and reduces fragmentation of the available address
+                space.
+            </p>
+
+        </section>
+
+    </main>
+
+
+    <!-- Footer -->
+    <footer>
+
+        <div class="container">
+
+            <p>
+                © 2026 NetToolsHub.com
+            </p>
+
+            <p>
+                VLSM Calculator | Subnet Calculator | CIDR Calculator
+            </p>
+
+        </div>
+
+    </footer>
+
+
+    <!-- JavaScript -->
+    <script src="vlsm.js"></script>
+
+</body>
+</html>

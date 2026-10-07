@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>IP Validator - IPv4 Address Checker | NetToolsHub</title>
+
+    <meta name="description"
+          content="Validate IPv4 addresses online. Check IP format, class, private/public status, loopback, APIPA, CGNAT and special IP ranges.">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="site-header">
+    <div class="container">
+        <h1>NetToolsHub</h1>
+        <p>Free Network Tools</p>
+    </div>
+</header>
+
+
+<main class="container">
+
+    <div class="card">
+
+        <h2>IPv4 Address Validator</h2>
+
+        <p class="tool-description">
+            Enter an IPv4 address to validate it and check its IP type,
+            class, private/public status and special purpose.
+        </p>
+
+        <label for="ipAddress">IPv4 Address</label>
+
+        <input
+            type="text"
+            id="ipAddress"
+            placeholder="Example: 192.168.1.10"
+            autocomplete="off"
+        >
+
+        <div class="button-group">
+
+            <button onclick="validateIP()">
+                Validate IP
+            </button>
+
+            <button class="secondary" onclick="loadExample()">
+                Example
+            </button>
+
+            <button class="reset" onclick="resetValidator()">
+                Reset
+            </button>
+
+        </div>
+
+        <div id="error" class="error"></div>
+
+    </div>
+
+
+    <!-- Result -->
+
+    <div id="result" class="card result-card" style="display:none;">
+
+        <div id="validationStatus" class="network-status"></div>
+
+        <div class="result-grid">
+
+            <div class="result-item">
+                <span>IP Address</span>
+                <strong id="resultIP">-</strong>
+            </div>
+
+            <div class="result-item">
+                <span>Status</span>
+                <strong id="resultStatus">-</strong>
+            </div>
+
+            <div class="result-item">
+                <span>IP Version</span>
+                <strong id="ipVersion">-</strong>
+            </div>
+
+            <div class="result-item">
+                <span>IP Class</span>
+                <strong id="ipClass">-</strong>
+            </div>
+
+            <div class="result-item">
+                <span>IP Type</span>
+                <strong id="ipType">-</strong>
+            </div>
+
+            <div class="result-item">
+                <span>Scope</span>
+                <strong id="ipScope">-</strong>
+            </div>
+
+            <div class="result-item">
+                <span>First Octet</span>
+                <strong id="firstOctet">-</strong>
+            </div>
+
+            <div class="result-item">
+                <span>Binary</span>
+                <strong id="binaryIP">-</strong>
+            </div>
+
+        </div>
+
+
+        <div class="info-box">
+
+            <h3>IP Address Information</h3>
+
+            <p id="ipDescription">
+                -
+            </p>
+
+        </div>
+
+
+        <div class="button-group">
+
+            <button onclick="copyResult()">
+                Copy Result
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- Common IP Examples -->
+
+    <div class="card">
+
+        <h2>Common IPv4 Examples</h2>
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>IP Address</th>
+                    <th>Type</th>
+                    <th>Range</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <tr>
+                    <td>10.0.0.1</td>
+                    <td>Private</td>
+                    <td>10.0.0.0/8</td>
+                </tr>
+
+                <tr>
+                    <td>172.16.0.1</td>
+                    <td>Private</td>
+                    <td>172.16.0.0/12</td>
+                </tr>
+
+                <tr>
+                    <td>192.168.1.1</td>
+                    <td>Private</td>
+                    <td>192.168.0.0/16</td>
+                </tr>
+
+                <tr>
+                    <td>127.0.0.1</td>
+                    <td>Loopback</td>
+                    <td>127.0.0.0/8</td>
+                </tr>
+
+                <tr>
+                    <td>169.254.1.1</td>
+                    <td>Link-Local / APIPA</td>
+                    <td>169.254.0.0/16</td>
+                </tr>
+
+                <tr>
+                    <td>100.64.0.1</td>
+                    <td>CGNAT / Shared</td>
+                    <td>100.64.0.0/10</td>
+                </tr>
+
+                <tr>
+                    <td>8.8.8.8</td>
+                    <td>Public</td>
+                    <td>Public IPv4</td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    <!-- Information -->
+
+    <div class="card">
+
+        <h2>What does this IP Validator check?</h2>
+
+        <ul>
+
+            <li>IPv4 format validity</li>
+
+            <li>IP Class A, B, C, D or E</li>
+
+            <li>Private IP address</li>
+
+            <li>Public IP address</li>
+
+            <li>Loopback address</li>
+
+            <li>APIPA / Link-Local address</li>
+
+            <li>CGNAT / Shared address</li>
+
+            <li>Multicast address</li>
+
+            <li>Reserved address</li>
+
+            <li>Binary representation</li>
+
+        </ul>
+
+    </div>
+
+</main>
+
+
+<footer class="site-footer">
+
+    <div class="container">
+
+        <p>
+            © 2026 NetToolsHub. Free Networking Tools.
+        </p>
+
+    </div>
+
+</footer>
+
+
+<script src="ip-validator.js"></script>
+
+</body>
+</html>

@@ -1,1 +1,488 @@
-CIDR: /27
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description"
+        content="Free CIDR Calculator - Calculate IPv4 subnet mask, network address, broadcast address, IP range and usable hosts.">
+
+    <title>CIDR Calculator - IPv4 Network Tools</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="header">
+
+    <div class="container">
+
+        <h1>CIDR Calculator</h1>
+
+        <p>IPv4 CIDR & Network Calculator</p>
+
+    </div>
+
+</header>
+
+
+<main class="container">
+
+    <!-- CIDR Calculator -->
+
+    <section class="card">
+
+        <h2>CIDR Calculator</h2>
+
+        <p>
+            Enter an IPv4 address and CIDR prefix to calculate
+            subnet information.
+        </p>
+
+
+        <div class="form-group">
+
+            <label for="ipAddress">
+                IPv4 Address
+            </label>
+
+            <input
+                type="text"
+                id="ipAddress"
+                value="192.168.10.10"
+                placeholder="Example: 192.168.10.10"
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="cidr">
+
+                CIDR Prefix
+
+            </label>
+
+            <select id="cidr">
+
+                <option value="0">/0</option>
+                <option value="1">/1</option>
+                <option value="2">/2</option>
+                <option value="3">/3</option>
+                <option value="4">/4</option>
+                <option value="5">/5</option>
+                <option value="6">/6</option>
+                <option value="7">/7</option>
+                <option value="8">/8</option>
+                <option value="9">/9</option>
+                <option value="10">/10</option>
+                <option value="11">/11</option>
+                <option value="12">/12</option>
+                <option value="13">/13</option>
+                <option value="14">/14</option>
+                <option value="15">/15</option>
+                <option value="16">/16</option>
+                <option value="17">/17</option>
+                <option value="18">/18</option>
+                <option value="19">/19</option>
+                <option value="20">/20</option>
+                <option value="21">/21</option>
+                <option value="22">/22</option>
+                <option value="23">/23</option>
+
+                <option value="24" selected>/24</option>
+
+                <option value="25">/25</option>
+                <option value="26">/26</option>
+                <option value="27">/27</option>
+                <option value="28">/28</option>
+                <option value="29">/29</option>
+                <option value="30">/30</option>
+                <option value="31">/31</option>
+                <option value="32">/32</option>
+
+            </select>
+
+        </div>
+
+
+        <!-- Examples -->
+
+        <div class="example-buttons">
+
+            <button onclick="setExample('192.168.10.10', 24)">
+                /24
+            </button>
+
+            <button onclick="setExample('192.168.10.10', 27)">
+                /27
+            </button>
+
+            <button onclick="setExample('10.10.20.15', 16)">
+                /16
+            </button>
+
+            <button onclick="setExample('172.16.5.20', 20)">
+                /20
+            </button>
+
+        </div>
+
+
+        <div class="button-group">
+
+            <button
+                class="calculate-btn"
+                onclick="calculateCIDR()">
+
+                Calculate
+
+            </button>
+
+
+            <button
+                class="reset-btn"
+                onclick="resetCIDR()">
+
+                Reset
+
+            </button>
+
+        </div>
+
+
+        <p id="errorMessage" class="error"></p>
+
+    </section>
+
+
+    <!-- Result -->
+
+    <section class="card">
+
+        <h2>CIDR Result</h2>
+
+
+        <div class="result-grid">
+
+
+            <div class="result-item">
+
+                <span>IP Address</span>
+
+                <strong id="resultIP">-</strong>
+
+            </div>
+
+
+            <div class="result-item">
+
+                <span>CIDR Prefix</span>
+
+                <strong id="resultCIDR">-</strong>
+
+            </div>
+
+
+            <div class="result-item">
+
+                <span>Subnet Mask</span>
+
+                <strong id="subnetMask">-</strong>
+
+            </div>
+
+
+            <div class="result-item">
+
+                <span>Wildcard Mask</span>
+
+                <strong id="wildcardMask">-</strong>
+
+            </div>
+
+
+            <div class="result-item">
+
+                <span>Network Address</span>
+
+                <strong id="networkAddress">-</strong>
+
+            </div>
+
+
+            <div class="result-item">
+
+                <span>Broadcast Address</span>
+
+                <strong id="broadcastAddress">-</strong>
+
+            </div>
+
+
+            <div class="result-item">
+
+                <span>First IP</span>
+
+                <strong id="firstIP">-</strong>
+
+            </div>
+
+
+            <div class="result-item">
+
+                <span>Last IP</span>
+
+                <strong id="lastIP">-</strong>
+
+            </div>
+
+
+            <div class="result-item">
+
+                <span>Total Addresses</span>
+
+                <strong id="totalAddresses">-</strong>
+
+            </div>
+
+
+            <div class="result-item">
+
+                <span>Usable Hosts</span>
+
+                <strong id="usableHosts">-</strong>
+
+            </div>
+
+
+            <div class="result-item">
+
+                <span>IP Class</span>
+
+                <strong id="ipClass">-</strong>
+
+            </div>
+
+
+            <div class="result-item">
+
+                <span>Host Bits</span>
+
+                <strong id="hostBits">-</strong>
+
+            </div>
+
+
+        </div>
+
+
+        <button
+            class="copy-btn"
+            onclick="copyCIDRResult()">
+
+            📋 Copy Result
+
+        </button>
+
+    </section>
+
+
+    <!-- CIDR Information -->
+
+    <section class="card info">
+
+        <h2>What is CIDR?</h2>
+
+        <p>
+
+            CIDR stands for
+            <strong>Classless Inter-Domain Routing</strong>.
+
+            CIDR represents an IPv4 network using a slash
+            followed by a number, such as:
+
+        </p>
+
+
+        <div class="cidr-example">
+
+            192.168.10.10/24
+
+        </div>
+
+
+        <p>
+
+            The number after the slash represents the number
+            of network bits.
+
+        </p>
+
+
+        <h3>Example: 192.168.10.10/27</h3>
+
+
+        <ul>
+
+            <li>Subnet Mask: 255.255.255.224</li>
+
+            <li>Network Address: 192.168.10.0</li>
+
+            <li>Broadcast Address: 192.168.10.31</li>
+
+            <li>First IP: 192.168.10.1</li>
+
+            <li>Last IP: 192.168.10.30</li>
+
+            <li>Total Addresses: 32</li>
+
+            <li>Usable Hosts: 30</li>
+
+        </ul>
+
+
+        <h3>CIDR Examples</h3>
+
+
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>CIDR</th>
+                        <th>Subnet Mask</th>
+                        <th>Total IPs</th>
+                        <th>Usable Hosts</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    <tr>
+
+                        <td>/24</td>
+
+                        <td>255.255.255.0</td>
+
+                        <td>256</td>
+
+                        <td>254</td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>/25</td>
+
+                        <td>255.255.255.128</td>
+
+                        <td>128</td>
+
+                        <td>126</td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>/26</td>
+
+                        <td>255.255.255.192</td>
+
+                        <td>64</td>
+
+                        <td>62</td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>/27</td>
+
+                        <td>255.255.255.224</td>
+
+                        <td>32</td>
+
+                        <td>30</td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>/28</td>
+
+                        <td>255.255.255.240</td>
+
+                        <td>16</td>
+
+                        <td>14</td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>/29</td>
+
+                        <td>255.255.255.248</td>
+
+                        <td>8</td>
+
+                        <td>6</td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>/30</td>
+
+                        <td>255.255.255.252</td>
+
+                        <td>4</td>
+
+                        <td>2</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<footer class="footer">
+
+    <p>
+
+        © 2026 NetToolsHub - CIDR Calculator
+
+    </p>
+
+</footer>
+
+
+<script src="cidr.js"></script>
+
+</body>
+
+</html>
